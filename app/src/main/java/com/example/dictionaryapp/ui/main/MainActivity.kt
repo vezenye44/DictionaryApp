@@ -1,18 +1,20 @@
-package com.example.dictionaryapp.view.main
+package com.example.dictionaryapp.ui.main
 
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dictionaryapp.R
 import com.example.dictionaryapp.databinding.ActivityMainBinding
 import com.example.dictionaryapp.model.data.AppState
 import com.example.dictionaryapp.model.data.Word
-import com.example.dictionaryapp.presenter.Presenter
-import com.example.dictionaryapp.view.base.BaseActivity
-import com.example.dictionaryapp.view.base.View
-import com.example.dictionaryapp.view.main.translates_rv.TranslatesAdapter
+import com.example.dictionaryapp.ui.base.BaseActivity
+import com.example.dictionaryapp.ui.main.translates_rv.TranslatesAdapter
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 
 class MainActivity : BaseActivity<AppState>() {
@@ -26,16 +28,18 @@ class MainActivity : BaseActivity<AppState>() {
             }
         }
 
-    override fun createPresenter(): Presenter<AppState, View> {
-        return lastCustomNonConfigurationInstance as? Presenter<AppState, View>
-            ?: TranslatePresenter()
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    override val viewModel: TranslateViewModel by lazy {
+        viewModelFactory.create(TranslateViewModel::class.java)
     }
 
-    override fun onRetainCustomNonConfigurationInstance(): Presenter<AppState, View> {
-        return presenter
-    }
+    private val observer = Observer<AppState> { renderData(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -44,14 +48,18 @@ class MainActivity : BaseActivity<AppState>() {
     }
 
     private fun initView() {
+
         binding.searchFab.setOnClickListener {
             val searchDialogFragment = SearchDialogFragment.newInstance()
+            /*searchDialogFragment.setOnSearchClickListener { searchWord ->
+                viewModel.getData(searchWord, true).observe(this@MainActivity, observer)
+            }*/
             searchDialogFragment.setOnSearchClickListener { searchWord ->
-                presenter.getData(searchWord, true)
+                viewModel.getData(searchWord, true)
+                    //.observe(this@MainActivity, observer)
             }
             searchDialogFragment.show(
-                supportFragmentManager,
-                BOTTOM_SHEET_FRAGMENT_DIALOG_TAG
+                supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG
             )
         }
     }
@@ -95,7 +103,7 @@ class MainActivity : BaseActivity<AppState>() {
         showViewError()
         binding.errorTextview.text = error ?: getString(R.string.undefined_error)
         binding.reloadButton.setOnClickListener {
-            presenter.getData("hi", true)
+            viewModel.getData("hi", true).observe(this, observer)
         }
     }
 

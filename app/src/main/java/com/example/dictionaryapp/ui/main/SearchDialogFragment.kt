@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.view.main
+package com.example.dictionaryapp.ui.main
 
 import android.os.Bundle
 import android.text.Editable
@@ -38,7 +38,7 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = SearchDialogFragmentBinding.inflate(inflater, container, false)
 
@@ -70,4 +70,6 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
             return SearchDialogFragment()
         }
     }
+
 }
+

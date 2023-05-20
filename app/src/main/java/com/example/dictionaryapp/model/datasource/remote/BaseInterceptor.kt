@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.model.datasource
+package com.example.dictionaryapp.model.datasource.remote
 
 import okhttp3.Interceptor
 import okhttp3.Response

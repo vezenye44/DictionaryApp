@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.view.main.translates_rv
+package com.example.dictionaryapp.ui.main.translates_rv
 
 import android.view.LayoutInflater
 import android.view.View

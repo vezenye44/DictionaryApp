@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -36,6 +37,13 @@ android {
 }
 
 dependencies {
+
+    // Dagger2
+    implementation 'com.google.dagger:dagger:2.45'
+    implementation 'com.google.dagger:dagger-android-support:2.45'
+    kapt 'com.google.dagger:dagger-compiler:2.45'
+    kapt 'com.google.dagger:dagger-android-processor:2.45'
+
 
     //Retrofit + RxJava Adapter
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
