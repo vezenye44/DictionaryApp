@@ -1,13 +1,11 @@
 package com.example.dictionaryapp.ui.main
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
 import com.example.dictionaryapp.model.data.AppState
 import com.example.dictionaryapp.ui.base.BaseViewModel
 import io.reactivex.rxjava3.observers.DisposableObserver
-import javax.inject.Inject
 
-class TranslateViewModel @Inject constructor(
+class TranslateViewModel(
     private val interactor: TranslateInteractor,
 ) : BaseViewModel<AppState>() {
 

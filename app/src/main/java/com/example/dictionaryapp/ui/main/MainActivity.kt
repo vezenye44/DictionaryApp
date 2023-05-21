@@ -5,7 +5,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dictionaryapp.R
 import com.example.dictionaryapp.databinding.ActivityMainBinding
@@ -13,33 +12,26 @@ import com.example.dictionaryapp.model.data.AppState
 import com.example.dictionaryapp.model.data.Word
 import com.example.dictionaryapp.ui.base.BaseActivity
 import com.example.dictionaryapp.ui.main.translates_rv.TranslatesAdapter
-import dagger.android.AndroidInjection
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : BaseActivity<AppState>() {
 
     private lateinit var binding: ActivityMainBinding
     private var adapter: TranslatesAdapter? = null
-    private val onListItemClickListener: TranslatesAdapter.OnListItemClickListener =
+    private val onListItemClickListener: TranslatesAdapter.OnListItemClickListener by lazy {
         object : TranslatesAdapter.OnListItemClickListener {
             override fun onItemClick(data: Word) {
                 Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
             }
         }
-
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    override val viewModel: TranslateViewModel by lazy {
-        viewModelFactory.create(TranslateViewModel::class.java)
     }
+
+    override val viewModel: TranslateViewModel by viewModel()
 
     private val observer = Observer<AppState> { renderData(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
-
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -48,15 +40,10 @@ class MainActivity : BaseActivity<AppState>() {
     }
 
     private fun initView() {
-
         binding.searchFab.setOnClickListener {
             val searchDialogFragment = SearchDialogFragment.newInstance()
-            /*searchDialogFragment.setOnSearchClickListener { searchWord ->
-                viewModel.getData(searchWord, true).observe(this@MainActivity, observer)
-            }*/
             searchDialogFragment.setOnSearchClickListener { searchWord ->
                 viewModel.getData(searchWord, true)
-                    //.observe(this@MainActivity, observer)
             }
             searchDialogFragment.show(
                 supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG
