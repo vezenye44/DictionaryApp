@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dictionaryapp.R
 import com.example.dictionaryapp.databinding.ActivityMainBinding
@@ -26,10 +25,7 @@ class MainActivity : BaseActivity<AppState>() {
             }
         }
     }
-
     override val viewModel: TranslateViewModel by viewModel()
-
-    private val observer = Observer<AppState> { renderData(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,10 +56,7 @@ class MainActivity : BaseActivity<AppState>() {
                 } else {
                     showViewSuccess()
                     if (adapter == null) {
-                        binding.mainActivityRecyclerview.layoutManager =
-                            LinearLayoutManager(applicationContext)
-                        binding.mainActivityRecyclerview.adapter =
-                            TranslatesAdapter(onListItemClickListener, dataModel)
+                        initRecyclerView(dataModel)
                     } else {
                         adapter!!.setData(dataModel)
                     }
@@ -86,11 +79,19 @@ class MainActivity : BaseActivity<AppState>() {
         }
     }
 
+    // TODO : Изменить названия методов
+    private fun initRecyclerView(dataModel: List<Word>) {
+        binding.mainActivityRecyclerview.layoutManager =
+            LinearLayoutManager(applicationContext)
+        binding.mainActivityRecyclerview.adapter =
+            TranslatesAdapter(onListItemClickListener, dataModel)
+    }
+
     private fun showErrorScreen(error: String?) {
         showViewError()
         binding.errorTextview.text = error ?: getString(R.string.undefined_error)
         binding.reloadButton.setOnClickListener {
-            viewModel.getData("hi", true).observe(this, observer)
+            viewModel.getData("hi", true)
         }
     }
 

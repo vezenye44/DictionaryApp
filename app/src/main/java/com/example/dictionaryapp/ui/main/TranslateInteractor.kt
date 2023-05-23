@@ -4,7 +4,6 @@ import com.example.dictionaryapp.model.data.AppState
 import com.example.dictionaryapp.model.data.Word
 import com.example.dictionaryapp.model.interactor.Interactor
 import com.example.dictionaryapp.model.repository.Repository
-import io.reactivex.rxjava3.core.Observable
 
 class TranslateInteractor(
     private val remoteRepository: Repository<List<Word>>,
@@ -12,11 +11,11 @@ class TranslateInteractor(
 
     ) : Interactor<AppState> {
 
-    override fun getData(name: String, fromRemoteSource: Boolean): Observable<AppState> {
+    override suspend fun getData(name: String, fromRemoteSource: Boolean): AppState {
         return if (fromRemoteSource) {
-            remoteRepository.getData(name).map { AppState.Success(it) }
+            AppState.Success(remoteRepository.getData(name))
         } else {
-            localRepository.getData(name).map { AppState.Success(it) }
+            AppState.Success(localRepository.getData(name))
         }
     }
 }

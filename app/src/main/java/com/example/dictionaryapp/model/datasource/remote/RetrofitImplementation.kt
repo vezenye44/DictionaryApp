@@ -2,15 +2,13 @@ package com.example.dictionaryapp.model.datasource.remote
 
 import com.example.dictionaryapp.model.data.Word
 import com.example.dictionaryapp.model.datasource.DataSource
-import io.reactivex.rxjava3.core.Observable
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitImplementation : DataSource<List<Word>> {
-    override fun getData(word: String): Observable<List<Word>> {
+    override suspend fun getData(word: String): List<Word> {
         return getService(BaseInterceptor.interceptor).search(word)
     }
 
@@ -22,8 +20,8 @@ class RetrofitImplementation : DataSource<List<Word>> {
         return Retrofit.Builder()
             .baseUrl(BASE_URL_LOCATIONS)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .client(OkHttpClient()
+            .client(
+                OkHttpClient()
                     .newBuilder()
                     .addInterceptor(interceptor)
                     .build()
