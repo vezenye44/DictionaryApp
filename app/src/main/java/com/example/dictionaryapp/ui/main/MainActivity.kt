@@ -3,7 +3,6 @@ package com.example.dictionaryapp.ui.main
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dictionaryapp.R
 import com.example.dictionaryapp.databinding.ActivityMainBinding
@@ -18,13 +17,22 @@ class MainActivity : BaseActivity<AppState>() {
 
     private lateinit var binding: ActivityMainBinding
     private var adapter: TranslatesAdapter? = null
+
     private val onListItemClickListener: TranslatesAdapter.OnListItemClickListener by lazy {
         object : TranslatesAdapter.OnListItemClickListener {
             override fun onItemClick(data: Word) {
-                Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
+                startActivity(
+                    TranslateDescriptionActivity.getIntent(
+                        this@MainActivity,
+                        data.text.orEmpty(),
+                        data.meanings?.first()?.translation?.text.orEmpty(),
+                        data.meanings?.first()?.imageUrl.orEmpty(),
+                    )
+                )
             }
         }
     }
+
     override val viewModel: TranslateViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {

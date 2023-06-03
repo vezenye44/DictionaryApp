@@ -38,29 +38,37 @@ android {
 
 dependencies {
 
-    //Coroutines
+    // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
-    //Koin
+    // Koin
     def koin_version= "3.4.0"
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-android-compat:$koin_version"
 
-
-    //Retrofit + RxJava Adapter
+    // Retrofit + RxJava Adapter
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
 
-    //Glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    // Loading images
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    kapt 'com.github.bumptech.glide:compiler:4.15.1'
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.8'
+    // Coil
+    implementation 'io.coil-kt:coil:1.4.0'
 
     // UI + Kotlin
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    /*implementation 'com.github.bomiyr:AlertDialogFragment:1.1'*/
 
     // Test
     testImplementation 'junit:junit:4.13.2'

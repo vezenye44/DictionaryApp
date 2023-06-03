@@ -1,5 +1,7 @@
 package com.example.dictionaryapp.di
 
+import com.example.dictionaryapp.model.connection.AndroidNetworkStatus
+import com.example.dictionaryapp.model.connection.INetworkStatus
 import com.example.dictionaryapp.model.data.Word
 import com.example.dictionaryapp.model.datasource.DataSource
 import com.example.dictionaryapp.model.datasource.local.DataSourceLocal
@@ -14,6 +16,8 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val application = module {
+
+    single<INetworkStatus> { AndroidNetworkStatus() }
 
     single<Repository<List<Word>>>(named(NAME_REMOTE)) { RepositoryImpl(get(named(NAME_REMOTE))) }
     single<Repository<List<Word>>>(named(NAME_LOCAL)) { RepositoryImpl(get(named(NAME_LOCAL))) }
