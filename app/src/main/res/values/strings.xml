@@ -9,4 +9,5 @@
     <string name="delete_description">X</string>
     <string name="dialog_title_device_is_offline">network error</string>
     <string name="dialog_message_device_is_offline">check your network connection</string>
+    <string name="menu_item_history">History</string>
 </resources>

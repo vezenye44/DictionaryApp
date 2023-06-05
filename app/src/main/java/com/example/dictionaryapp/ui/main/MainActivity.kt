@@ -1,6 +1,9 @@
 package com.example.dictionaryapp.ui.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +12,7 @@ import com.example.dictionaryapp.databinding.ActivityMainBinding
 import com.example.dictionaryapp.model.data.AppState
 import com.example.dictionaryapp.model.data.Word
 import com.example.dictionaryapp.ui.base.BaseActivity
+import com.example.dictionaryapp.ui.history.HistoryActivity
 import com.example.dictionaryapp.ui.main.translates_rv.TranslatesAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -54,6 +58,21 @@ class MainActivity : BaseActivity<AppState>() {
             )
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.history_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_history -> {
+                startActivity(Intent(this, HistoryActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     override fun renderData(appState: AppState) {
         when (appState) {
