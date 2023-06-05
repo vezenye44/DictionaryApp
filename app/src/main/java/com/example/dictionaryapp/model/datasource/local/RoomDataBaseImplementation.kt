@@ -3,8 +3,8 @@ package com.example.dictionaryapp.model.datasource.local
 import com.example.dictionaryapp.model.models.Word
 import com.example.dictionaryapp.model.datasource.base.DataSourceLocal
 import com.example.dictionaryapp.room.HistoryDao
-import com.example.dictionaryapp.ui.utils.convertDataModelSuccessToEntity
-import com.example.dictionaryapp.ui.utils.mapHistoryEntityToSearchResult
+import com.example.dictionaryapp.model.utils.convertDataModelSuccessToEntity
+import com.example.dictionaryapp.model.utils.mapHistoryEntityToSearchResult
 
 class RoomDataBaseImplementation(
     private val historyDao: HistoryDao,
