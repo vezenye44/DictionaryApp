@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.model.data
+package com.example.dictionaryapp.model.models
 
 sealed class AppState {
 
