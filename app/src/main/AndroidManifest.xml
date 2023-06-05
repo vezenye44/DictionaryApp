@@ -27,6 +27,7 @@
 
         </activity>
         <activity android:name=".ui.main.TranslateDescriptionActivity" />
+        <activity android:name="com.example.dictionaryapp.ui.history.HistoryActivity" />
 
     </application>
 
