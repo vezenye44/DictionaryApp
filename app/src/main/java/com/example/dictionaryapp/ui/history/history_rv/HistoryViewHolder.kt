@@ -26,6 +26,7 @@ class HistoryViewHolder(
     fun bind(data: Word) {
         if (layoutPosition != RecyclerView.NO_POSITION) {
             binding.headerHistoryTextviewRecyclerItem.text = data.text
+            binding.descriptionHistoryTextviewRecyclerItem.text = data.meanings?.get(0)?.translation?.text
             itemView.setOnClickListener {
                 Toast.makeText(
                     itemView.context, "on click: ${data.text}",
