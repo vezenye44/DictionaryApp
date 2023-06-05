@@ -1,6 +1,6 @@
-package com.example.dictionaryapp.model.datasource.remote
+package com.example.dictionaryapp.retrofit
 
-import com.example.dictionaryapp.model.data.Word
+import com.example.dictionaryapp.model.models.Word
 import retrofit2.http.GET
 import retrofit2.http.Query
 

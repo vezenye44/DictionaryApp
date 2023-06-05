@@ -1,7 +1,9 @@
 package com.example.dictionaryapp.model.datasource.remote
 
-import com.example.dictionaryapp.model.data.Word
-import com.example.dictionaryapp.model.datasource.DataSource
+import com.example.dictionaryapp.model.models.Word
+import com.example.dictionaryapp.model.datasource.base.DataSource
+import com.example.dictionaryapp.retrofit.ApiService
+import com.example.dictionaryapp.retrofit.BaseInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

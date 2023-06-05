@@ -1,8 +1,8 @@
 package com.example.dictionaryapp.model.interactor
 
-import com.example.dictionaryapp.model.data.AppState
+import com.example.dictionaryapp.model.models.AppState
 
 interface Interactor<T : AppState> {
 
-    suspend fun getData(name: String, fromRemoteSource: Boolean): T
+    suspend fun getData(word: String, fromRemoteSource: Boolean): T
 }

@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dictionaryapp.databinding.TranslatesListItemLayoutBinding
-import com.example.dictionaryapp.model.data.Word
+import com.example.dictionaryapp.model.models.Word
 
 class TranslateViewHolder(
     itemView: View,

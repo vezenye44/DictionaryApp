@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.model.repository
+package com.example.dictionaryapp.model.repository.base
 
 interface Repository<T> {
 

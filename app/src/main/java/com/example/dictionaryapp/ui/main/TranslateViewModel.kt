@@ -1,6 +1,6 @@
 package com.example.dictionaryapp.ui.main
 
-import com.example.dictionaryapp.model.data.AppState
+import com.example.dictionaryapp.model.models.AppState
 import com.example.dictionaryapp.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
