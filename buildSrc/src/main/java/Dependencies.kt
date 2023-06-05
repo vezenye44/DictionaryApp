@@ -1,3 +1,16 @@
+import org.gradle.api.JavaVersion
+object Config {
+    const val applicationId = "com.example.dictionaryapp"
+    const val compileSdk = 33
+    const val minSdk = 24
+    const val targetSdk = 33
+    val javaVersion = JavaVersion.VERSION_1_8
+}
+object Releases {
+    const val versionCode = 1
+    const val versionName = "1.0"
+}
+
 object Versions {
 
     //Android
@@ -41,7 +54,7 @@ object Android {
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
     const val material = "com.google.android.material:material:${Versions.material}"
     const val swipeRefreshLayout =
-        "com.google.android.material:material:${Versions.swipeRefreshLayout}"
+        "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefreshLayout}"
 }
 
 object Kotlin {
@@ -63,9 +76,9 @@ object Retrofit {
 
 object Koin {
 
-    const val koinCore = "org.koin:koin-core:${Versions.koin}"
-    const val koinAndroid = "org.koin:koin-android:${Versions.koin}"
-    const val koinAndroidCompat = "org.koin:koin-android-compat:${Versions.koin}"
+    const val koinCore = "io.insert-koin:koin-core:${Versions.koin}"
+    const val koinAndroid = "io.insert-koin:koin-android:${Versions.koin}"
+    const val koinAndroidCompat = "io.insert-koin:koin-android-compat:${Versions.koin}"
 }
 
 object ImageLoad {

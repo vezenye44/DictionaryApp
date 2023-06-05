@@ -5,15 +5,15 @@ plugins {
 }
 
 android {
-    namespace 'com.example.dictionaryapp'
-    compileSdk 33
+    namespace Config.applicationId
+    compileSdk Config.compileSdk
 
     defaultConfig {
-        applicationId "com.example.dictionaryapp"
-        minSdk 24
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        applicationId Config.applicationId
+        minSdk Config.minSdk
+        targetSdk Config.targetSdk
+        versionCode Releases.versionCode
+        versionName Releases.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -25,8 +25,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility Config.javaVersion
+        targetCompatibility Config.javaVersion
     }
     kotlinOptions {
         jvmTarget = '1.8'
