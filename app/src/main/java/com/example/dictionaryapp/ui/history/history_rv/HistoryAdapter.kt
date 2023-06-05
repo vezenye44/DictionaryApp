@@ -2,7 +2,7 @@ package com.example.dictionaryapp.ui.history.history_rv
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dictionaryapp.model.data.Word
+import com.example.dictionaryapp.model.models.Word
 
 class HistoryAdapter(
     private var data: List<Word> = arrayListOf()

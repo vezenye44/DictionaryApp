@@ -1,7 +1,8 @@
 package com.example.dictionaryapp.model.repository
 
-import com.example.dictionaryapp.model.data.Word
-import com.example.dictionaryapp.model.datasource.DataSourceLocal
+import com.example.dictionaryapp.model.models.Word
+import com.example.dictionaryapp.model.datasource.base.DataSourceLocal
+import com.example.dictionaryapp.model.repository.base.RepositoryLocal
 
 class RepositoryLocalImpl(
     private val dataSource: DataSourceLocal<List<Word>>

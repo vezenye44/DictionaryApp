@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.model.datasource.local.room
+package com.example.dictionaryapp.room
 
 import androidx.room.*
 

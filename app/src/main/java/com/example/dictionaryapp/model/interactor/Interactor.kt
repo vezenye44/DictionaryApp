@@ -1,6 +1,6 @@
 package com.example.dictionaryapp.model.interactor
 
-import com.example.dictionaryapp.model.data.AppState
+import com.example.dictionaryapp.model.models.AppState
 
 interface Interactor<T : AppState> {
 

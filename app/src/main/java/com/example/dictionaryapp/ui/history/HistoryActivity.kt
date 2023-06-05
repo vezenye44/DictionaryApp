@@ -5,8 +5,8 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dictionaryapp.R
 import com.example.dictionaryapp.databinding.ActivityHistoryBinding
-import com.example.dictionaryapp.model.data.AppState
-import com.example.dictionaryapp.model.data.Word
+import com.example.dictionaryapp.model.models.AppState
+import com.example.dictionaryapp.model.models.Word
 import com.example.dictionaryapp.ui.base.BaseActivity
 import com.example.dictionaryapp.ui.history.history_rv.HistoryAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel

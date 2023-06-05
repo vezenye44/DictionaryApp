@@ -1,7 +1,7 @@
 package com.example.dictionaryapp.ui.utils
 
-import com.example.dictionaryapp.model.data.Word
-import com.example.dictionaryapp.model.datasource.local.room.HistoryEntity
+import com.example.dictionaryapp.model.models.Word
+import com.example.dictionaryapp.room.HistoryEntity
 
 fun mapHistoryEntityToSearchResult(list: List<HistoryEntity>): List<Word> {
     val dataModel = ArrayList<Word>()

@@ -1,7 +1,7 @@
 package com.example.dictionaryapp.model.datasource.local
 
-import com.example.dictionaryapp.model.data.Word
-import com.example.dictionaryapp.model.datasource.DataSourceLocal
+import com.example.dictionaryapp.model.models.Word
+import com.example.dictionaryapp.model.datasource.base.DataSourceLocal
 
 class DataSourceLocalImpl(
     private val remoteProvider: RoomDataBaseImplementation,

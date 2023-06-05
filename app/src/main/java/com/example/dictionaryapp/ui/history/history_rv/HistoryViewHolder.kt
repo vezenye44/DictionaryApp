@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dictionaryapp.databinding.HistoryListItemBinding
-import com.example.dictionaryapp.model.data.Word
+import com.example.dictionaryapp.model.models.Word
 
 class HistoryViewHolder(
     itemView: View,
