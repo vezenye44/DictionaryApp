@@ -14,3 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "DictionaryApp"
 include ':app'
+include ':networkStatus'
+include ':model'
+include ':core'
+include ':repository'
+include ':dataSource'
+include ':historyScreen'

@@ -11,6 +11,18 @@ object Releases {
     const val versionName = "1.0"
 }
 
+object Modules {
+
+    const val app = ":app"
+    const val core = ":core"
+    const val model = ":model"
+    const val repository = ":repository"
+    const val dataSource = ":dataSource"
+    const val networkStatus = ":networkStatus"
+
+    const val historyScreen = ":historyScreen"
+}
+
 object Versions {
 
     //Android

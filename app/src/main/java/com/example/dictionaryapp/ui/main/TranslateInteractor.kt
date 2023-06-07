@@ -1,10 +1,10 @@
 package com.example.dictionaryapp.ui.main
 
-import com.example.dictionaryapp.model.models.AppState
-import com.example.dictionaryapp.model.models.Word
-import com.example.dictionaryapp.model.interactor.Interactor
-import com.example.dictionaryapp.model.repository.base.Repository
-import com.example.dictionaryapp.model.repository.base.RepositoryLocal
+import com.example.model.models.AppState
+import com.example.model.models.Word
+import com.example.model.interactor.Interactor
+import com.example.repository.repository.base.Repository
+import com.example.repository.repository.base.RepositoryLocal
 
 class TranslateInteractor(
     private val remoteRepository: Repository<List<Word>>,

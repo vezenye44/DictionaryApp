@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import coil.ImageLoader
 import coil.request.ImageRequest
-import coil.transform.CircleCropTransformation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -18,7 +17,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.example.dictionaryapp.R
 import com.example.dictionaryapp.databinding.ActivityTranslateDescriptionBinding
-import com.example.dictionaryapp.model.connection.INetworkStatus
+import com.example.networkstatus.INetworkStatus
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import org.koin.android.ext.android.get

@@ -38,6 +38,14 @@ android {
 
 dependencies {
 
+    implementation project(Modules.historyScreen)
+
+    implementation project(Modules.model)
+    implementation project(Modules.core)
+    implementation project(Modules.repository)
+    implementation project(Modules.dataSource)
+    implementation project(Modules.networkStatus)
+
     implementation Kotlin.core
     implementation Kotlin.coroutinesCore
     implementation Kotlin.coroutinesAndroid
@@ -46,13 +54,13 @@ dependencies {
     implementation Koin.koinAndroid
     implementation Koin.koinAndroidCompat
 
-    implementation Room.runtime
-    kapt Room.compiler
-    implementation Room.roomKtx
+    implementation(Room.runtime)
+    kapt(Room.compiler)
+    implementation(Room.roomKtx)
 
-    implementation Retrofit.retrofit
-    implementation Retrofit.converterGson
-    implementation Retrofit.loggingInterceptor
+    implementation(Retrofit.retrofit)
+    implementation(Retrofit.loggingInterceptor)
+    implementation(Retrofit.converterGson)
 
     implementation ImageLoad.glide
     kapt ImageLoad.glideCompiler
@@ -64,8 +72,4 @@ dependencies {
     implementation Android.appcompat
     implementation Android.material
     implementation Android.swipeRefreshLayout
-
-    testImplementation TestImpl.junit
-    androidTestImplementation TestImpl.androidxJunit
-    androidTestImplementation TestImpl.espresso
 }
