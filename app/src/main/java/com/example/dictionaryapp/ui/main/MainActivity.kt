@@ -1,16 +1,19 @@
 package com.example.dictionaryapp.ui.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.core.BaseActivity
 import com.example.dictionaryapp.R
 import com.example.dictionaryapp.databinding.ActivityMainBinding
-import com.example.dictionaryapp.model.data.AppState
-import com.example.dictionaryapp.model.data.Word
-import com.example.dictionaryapp.ui.base.BaseActivity
+import com.example.historyscreen.HistoryActivity
 import com.example.dictionaryapp.ui.main.translates_rv.TranslatesAdapter
+import com.example.model.models.AppState
+import com.example.model.models.Word
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -18,13 +21,22 @@ class MainActivity : BaseActivity<AppState>() {
 
     private lateinit var binding: ActivityMainBinding
     private var adapter: TranslatesAdapter? = null
+
     private val onListItemClickListener: TranslatesAdapter.OnListItemClickListener by lazy {
         object : TranslatesAdapter.OnListItemClickListener {
             override fun onItemClick(data: Word) {
-                Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
+                startActivity(
+                    TranslateDescriptionActivity.getIntent(
+                        this@MainActivity,
+                        data.text.orEmpty(),
+                        data.meanings?.first()?.translation?.text.orEmpty(),
+                        data.meanings?.first()?.imageUrl.orEmpty(),
+                    )
+                )
             }
         }
     }
+
     override val viewModel: TranslateViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +59,22 @@ class MainActivity : BaseActivity<AppState>() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.history_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_history -> {
+                startActivity(Intent(this, HistoryActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
     override fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
@@ -67,7 +95,7 @@ class MainActivity : BaseActivity<AppState>() {
                 if (appState.progress != null) {
                     binding.progressBarHorizontal.visibility = VISIBLE
                     binding.progressBarRound.visibility = GONE
-                    binding.progressBarHorizontal.progress = appState.progress
+                    binding.progressBarHorizontal.progress = appState.progress!!
                 } else {
                     binding.progressBarHorizontal.visibility = GONE
                     binding.progressBarRound.visibility = VISIBLE
