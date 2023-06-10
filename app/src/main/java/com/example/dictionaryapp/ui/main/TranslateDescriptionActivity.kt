@@ -6,8 +6,10 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import coil.ImageLoader
 import coil.request.ImageRequest
 import com.bumptech.glide.Glide
@@ -16,7 +18,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.example.dictionaryapp.R
-import com.example.dictionaryapp.databinding.ActivityTranslateDescriptionBinding
+import com.example.dictionaryapp.ui.utils.viewById
 import com.example.networkstatus.INetworkStatus
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -24,9 +26,10 @@ import org.koin.android.ext.android.get
 
 class TranslateDescriptionActivity() : AppCompatActivity() {
 
-    private val binding: ActivityTranslateDescriptionBinding by lazy {
-        ActivityTranslateDescriptionBinding.inflate(layoutInflater)
-    }
+    private val swipeRefreshLayout by viewById<SwipeRefreshLayout>(R.id.description_screen_swipe_refresh_layout)
+    private val headerTextview by viewById<TextView>(R.id.description_header_textview)
+    private val descriptionTextview by viewById<TextView>(R.id.description_textview)
+    private val descriptionImageview by viewById<ImageView>(R.id.description_imageview)
 
     private val connection: INetworkStatus = get()
 
@@ -36,12 +39,11 @@ class TranslateDescriptionActivity() : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-
+        setContentView(R.layout.activity_translate_description)
 
         setActionbarHomeButtonAsUp()
 
-        binding.descriptionScreenSwipeRefreshLayout.setOnRefreshListener {
+        swipeRefreshLayout.setOnRefreshListener {
             startLoadingOrShowError()
         }
         setData()
@@ -66,26 +68,24 @@ class TranslateDescriptionActivity() : AppCompatActivity() {
         if (connection.isOnline(applicationContext)) {
             setData()
         } else {
-            AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_title_device_is_offline)
-                .setMessage(R.string.dialog_message_device_is_offline)
-                .show()
+            AlertDialog.Builder(this).setTitle(R.string.dialog_title_device_is_offline)
+                .setMessage(R.string.dialog_message_device_is_offline).show()
         }
         stopLoading()
     }
 
 
     private fun setData() {
-        with(binding) {
-            descriptionHeaderTextview.text = word
-            descriptionTextview.text = description
-            val url = imageUrl
-            if (url != null) {
-                imageLoading(descriptionImageview, url)
-            } else {
-                stopLoading()
-            }
+
+        headerTextview.text = word
+        descriptionTextview.text = description
+        val url = imageUrl
+        if (url != null) {
+            imageLoading(descriptionImageview, url)
+        } else {
+            stopLoading()
         }
+
     }
 
     private fun imageLoading(imageView: ImageView, imageUrl: String) {
@@ -93,16 +93,13 @@ class TranslateDescriptionActivity() : AppCompatActivity() {
     }
 
     private fun stopLoading() {
-        binding.descriptionScreenSwipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout.isRefreshing = false
 
     }
 
     private fun usePicassoToLoadPhoto(imageView: ImageView, imageLink: String) {
-        Picasso.get().load("https:$imageLink")
-            .placeholder(R.drawable.ic_no_photo_vector)
-            .fit()
-            .centerCrop()
-            .into(imageView, object : Callback {
+        Picasso.get().load("https:$imageLink").placeholder(R.drawable.ic_no_photo_vector).fit()
+            .centerCrop().into(imageView, object : Callback {
                 override fun onSuccess() {
                     stopLoading()
                 }
@@ -115,56 +112,43 @@ class TranslateDescriptionActivity() : AppCompatActivity() {
     }
 
     private fun useGlideToLoadPhoto(imageView: ImageView, imageLink: String) {
-        Glide.with(imageView)
-            .load("https:$imageLink")
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<Drawable>?,
-                    isFirstResource: Boolean,
-                ): Boolean {
-                    stopLoading()
-                    imageView.setImageResource(R.drawable.ic_load_error_vector)
-                    return false
-                }
+        Glide.with(imageView).load("https:$imageLink").listener(object : RequestListener<Drawable> {
+            override fun onLoadFailed(
+                e: GlideException?,
+                model: Any?,
+                target: com.bumptech.glide.request.target.Target<Drawable>?,
+                isFirstResource: Boolean,
+            ): Boolean {
+                stopLoading()
+                imageView.setImageResource(R.drawable.ic_load_error_vector)
+                return false
+            }
 
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean,
-                ): Boolean {
-                    stopLoading()
-                    return false
-                }
-            })
-            .apply(
-                RequestOptions()
-                    .placeholder(R.drawable.ic_no_photo_vector)
-                    .centerCrop()
-            )
-            .into(imageView)
+            override fun onResourceReady(
+                resource: Drawable?,
+                model: Any?,
+                target: com.bumptech.glide.request.target.Target<Drawable>?,
+                dataSource: DataSource?,
+                isFirstResource: Boolean,
+            ): Boolean {
+                stopLoading()
+                return false
+            }
+        }).apply(
+            RequestOptions().placeholder(R.drawable.ic_no_photo_vector).centerCrop()
+        ).into(imageView)
     }
 
     private fun useCoilToLoadPhoto(imageView: ImageView, imageLink: String) {
-        val request = ImageRequest.Builder(this)
-            .data("https:$imageLink")
-            .target(
-                onStart = {
-                    imageView.setImageResource(R.drawable.ic_no_photo_vector)
-                },
-                onSuccess = { result ->
-                    stopLoading()
-                    imageView.setImageDrawable(result)
-                },
-                onError = {
-                    stopLoading()
-                    imageView.setImageResource(R.drawable.ic_load_error_vector)
-                }
-            )
-            .build()
+        val request = ImageRequest.Builder(this).data("https:$imageLink").target(onStart = {
+            imageView.setImageResource(R.drawable.ic_no_photo_vector)
+        }, onSuccess = { result ->
+            stopLoading()
+            imageView.setImageDrawable(result)
+        }, onError = {
+            stopLoading()
+            imageView.setImageResource(R.drawable.ic_load_error_vector)
+        }).build()
         ImageLoader(this).enqueue(request)
     }
 
