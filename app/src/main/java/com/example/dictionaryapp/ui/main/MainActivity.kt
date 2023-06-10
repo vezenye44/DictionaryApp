@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.BaseActivity
 import com.example.dictionaryapp.R
 import com.example.dictionaryapp.databinding.ActivityMainBinding
-import com.example.historyscreen.HistoryActivity
 import com.example.dictionaryapp.ui.main.translates_rv.TranslatesAdapter
+import com.example.historyscreen.HistoryActivity
 import com.example.model.models.AppState
 import com.example.model.models.Word
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.scope.createScope
 
 
 class MainActivity : BaseActivity<AppState>() {
@@ -37,7 +37,7 @@ class MainActivity : BaseActivity<AppState>() {
         }
     }
 
-    override val viewModel: TranslateViewModel by viewModel()
+    override val viewModel: TranslateViewModel by createScope().inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

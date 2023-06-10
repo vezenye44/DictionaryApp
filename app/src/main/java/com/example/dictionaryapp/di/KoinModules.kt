@@ -9,6 +9,7 @@ import com.example.datasource.datasource.local.RoomDataBaseImplementation
 import com.example.datasource.room.HistoryDatabase
 import com.example.datasource.datasource.remote.DataSourceRemote
 import com.example.datasource.datasource.remote.RetrofitImplementation
+import com.example.dictionaryapp.ui.main.MainActivity
 import com.example.repository.repository.base.Repository
 import com.example.repository.repository.RepositoryImpl
 import com.example.repository.repository.base.RepositoryLocal
@@ -17,8 +18,10 @@ import com.example.historyscreen.HistoryInteractor
 import com.example.historyscreen.HistoryViewModel
 import com.example.dictionaryapp.ui.main.TranslateInteractor
 import com.example.dictionaryapp.ui.main.TranslateViewModel
+import com.example.historyscreen.HistoryActivity
 import com.example.networkstatus.AndroidNetworkStatus
 import com.example.networkstatus.INetworkStatus
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val application = module {
@@ -44,13 +47,15 @@ val application = module {
 }
 
 val mainScreen = module {
-
-    factory { TranslateInteractor(get(), get()) }
-    factory { TranslateViewModel(get()) }
+    scope<MainActivity> {
+        scoped { TranslateInteractor(get(), get()) }
+        viewModel { TranslateViewModel(get()) }
+    }
 }
 
 val historyScreen = module {
-
-    factory { HistoryInteractor(get(), get()) }
-    factory { HistoryViewModel(get()) }
+    scope<HistoryActivity> {
+        scoped { HistoryInteractor(get(), get()) }
+        viewModel { HistoryViewModel(get()) }
+    }
 }

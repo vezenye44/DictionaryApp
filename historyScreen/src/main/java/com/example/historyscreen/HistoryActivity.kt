@@ -8,14 +8,14 @@ import com.example.historyscreen.databinding.ActivityHistoryBinding
 import com.example.historyscreen.history_rv.HistoryAdapter
 import com.example.model.models.AppState
 import com.example.model.models.Word
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.scope.createScope
 
 class HistoryActivity : BaseActivity<AppState>() {
 
     private lateinit var binding: ActivityHistoryBinding
     private var adapter: HistoryAdapter? = null
 
-    override val viewModel: HistoryViewModel by viewModel()
+    override val viewModel: HistoryViewModel by createScope().inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
