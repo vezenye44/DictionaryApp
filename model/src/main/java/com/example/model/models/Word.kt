@@ -1,8 +1,6 @@
 package com.example.model.models
 
-import com.google.gson.annotations.SerializedName
-
 data class Word(
-    @field:SerializedName("text") val text: String?,
-    @field:SerializedName("meanings") val meanings: List<Meanings>?,
+    val text: String = "",
+    val meanings: List<Meanings> = listOf(),
 )

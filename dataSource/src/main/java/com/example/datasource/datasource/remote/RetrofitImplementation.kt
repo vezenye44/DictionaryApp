@@ -1,9 +1,10 @@
 package com.example.datasource.datasource.remote
 
-import com.example.model.models.Word
 import com.example.datasource.datasource.base.DataSource
 import com.example.datasource.retrofit.ApiService
 import com.example.datasource.retrofit.BaseInterceptor
+import com.example.datasource.utils.mapWordDTOToResult
+import com.example.model.models.Word
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -11,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitImplementation : DataSource<List<Word>> {
     override suspend fun getData(word: String): List<Word> {
-        return getService(BaseInterceptor.interceptor).search(word)
+        return mapWordDTOToResult(getService(BaseInterceptor.interceptor).search(word))
     }
 
     private fun getService(interceptor: Interceptor): ApiService {

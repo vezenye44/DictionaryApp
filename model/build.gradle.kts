@@ -10,5 +10,4 @@ android {
 dependencies {
 
     implementation (Kotlin.core)
-    implementation (Retrofit.converterGson)
 }
