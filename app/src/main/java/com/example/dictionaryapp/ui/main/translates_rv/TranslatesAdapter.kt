@@ -1,14 +1,16 @@
 package com.example.dictionaryapp.ui.main.translates_rv
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dictionaryapp.model.data.Word
+import com.example.model.models.Word
 
 class TranslatesAdapter(
     private var onListItemClickListener: OnListItemClickListener,
     private var data: List<Word>,
 ) : RecyclerView.Adapter<TranslateViewHolder>() {
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(data: List<Word>) {
         this.data = data
         notifyDataSetChanged()

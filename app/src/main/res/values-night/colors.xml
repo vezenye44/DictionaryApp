@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#00534A</color>
-    <color name="colorPrimaryDark">#003A32</color>
-    <color name="colorAccent">#87123D</color>
+    <color name="colorPrimary">#9E9696</color>
+    <color name="colorPrimaryDark">#112530</color>
+    <color name="colorAccent">#354460</color>
 
-    <color name="color_error">#bf1e19</color>
-    <color name="color_text_main">#6649499E</color>
-    <color name="color_text_header">#7C8597</color>
+    <color name="color_error">#8F1612</color>
 
-    <color name="colorDialogBackground">#9F7C00</color>
+    <color name="color_text_main">#997C8597</color>
+    <color name="color_text_header">#CC7C8597</color>
+    <color name="color_demarcation_line">#337C8597</color>
+
+    <color name="colorDialogBackground">#33F4BD00</color>
 
 </resources>

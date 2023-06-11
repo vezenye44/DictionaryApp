@@ -1,31 +1,50 @@
 package com.example.dictionaryapp.ui.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.core.BaseActivity
 import com.example.dictionaryapp.R
 import com.example.dictionaryapp.databinding.ActivityMainBinding
-import com.example.dictionaryapp.model.data.AppState
-import com.example.dictionaryapp.model.data.Word
-import com.example.dictionaryapp.ui.base.BaseActivity
 import com.example.dictionaryapp.ui.main.translates_rv.TranslatesAdapter
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.historyscreen.HistoryActivity
+import com.example.model.models.AppState
+import com.example.model.models.Word
+import com.example.networkstatus.INetworkStatus
+import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.getKoin
+import org.koin.android.scope.createScope
 
 
 class MainActivity : BaseActivity<AppState>() {
 
     private lateinit var binding: ActivityMainBinding
     private var adapter: TranslatesAdapter? = null
+
     private val onListItemClickListener: TranslatesAdapter.OnListItemClickListener by lazy {
         object : TranslatesAdapter.OnListItemClickListener {
             override fun onItemClick(data: Word) {
-                Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
+                startActivity(
+                    TranslateDescriptionActivity.getIntent(
+                        this@MainActivity,
+                        data.text,
+                        data.meanings.first().translation.text,
+                        data.meanings.first().imageUrl,
+                    )
+                )
             }
         }
     }
-    override val viewModel: TranslateViewModel by viewModel()
+
+    override val viewModel: TranslateViewModel by createScope().inject()
+    private val networkStatus: INetworkStatus = getKoin().get()
+
+    private var searchDialogFragment: SearchDialogFragment? = null
+    private var snackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,14 +55,38 @@ class MainActivity : BaseActivity<AppState>() {
     }
 
     private fun initView() {
-        binding.searchFab.setOnClickListener {
-            val searchDialogFragment = SearchDialogFragment.newInstance()
-            searchDialogFragment.setOnSearchClickListener { searchWord ->
-                viewModel.getData(searchWord, true)
+
+        networkStatus.apply {
+            updateNetworkStatus(isOnline())
+            getNetworkStatusLiveData().observe(this@MainActivity) {
+                updateNetworkStatus(it)
             }
-            searchDialogFragment.show(
+        }
+
+        binding.searchFab.setOnClickListener {
+            searchDialogFragment = SearchDialogFragment.newInstance()
+            searchDialogFragment?.setOnSearchClickListener { searchWord ->
+                viewModel.getData(searchWord, networkStatus.isOnline())
+            }
+            searchDialogFragment?.show(
                 supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG
             )
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.history_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_history -> {
+                startActivity(Intent(this, HistoryActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -67,7 +110,7 @@ class MainActivity : BaseActivity<AppState>() {
                 if (appState.progress != null) {
                     binding.progressBarHorizontal.visibility = VISIBLE
                     binding.progressBarRound.visibility = GONE
-                    binding.progressBarHorizontal.progress = appState.progress
+                    binding.progressBarHorizontal.progress = appState.progress!!
                 } else {
                     binding.progressBarHorizontal.visibility = GONE
                     binding.progressBarRound.visibility = VISIBLE
@@ -85,6 +128,39 @@ class MainActivity : BaseActivity<AppState>() {
             LinearLayoutManager(applicationContext)
         binding.mainActivityRecyclerview.adapter =
             TranslatesAdapter(onListItemClickListener, dataModel)
+    }
+
+    private fun updateNetworkStatus(isOnline: Boolean) {
+        if (isOnline) {
+            snackbar?.dismiss()
+            showIsOnlineScreen()
+        } else {
+            showIsOfflineScreen()
+            snackbar = Snackbar.make(
+                binding.root,
+                "Проверьте подключение к сети",
+                Snackbar.LENGTH_INDEFINITE
+            )
+            snackbar?.show()
+        }
+    }
+
+    private fun showIsOfflineScreen() {
+        binding.successLinearLayout.visibility = VISIBLE
+        binding.searchFab.visibility = GONE
+
+        searchDialogFragment?.dismiss()
+
+        binding.loadingFrameLayout.visibility = GONE
+        binding.errorLinearLayout.visibility = GONE
+    }
+
+    private fun showIsOnlineScreen() {
+        binding.successLinearLayout.visibility = VISIBLE
+        binding.searchFab.visibility = VISIBLE
+
+        binding.loadingFrameLayout.visibility = GONE
+        binding.errorLinearLayout.visibility = GONE
     }
 
     private fun showErrorScreen(error: String?) {

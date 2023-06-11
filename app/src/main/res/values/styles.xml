@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BaseTextStyle" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/color_text_main</item>
+        <item name="android:textSize">@dimen/text_size_standard</item>
+    </style>
+
+    <style name="HeaderTextStyle" parent="BaseTextStyle">
+        <item name="android:textColor">@color/color_text_header</item>
+    </style>
+
+    <style name="TextViewButtonStyle" parent="BaseTextStyle">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="BaseEditTextStyle">
+        <item name="android:background">@null</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:inputType">text</item>
+    </style>
+
+    <style name="MySnackbarStyle" parent="@style/Widget.Material3.Snackbar">
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:backgroundTint">@color/color_error</item>
+    </style>
+</resources>

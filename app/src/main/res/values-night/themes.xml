@@ -1,40 +1,9 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.DictionaryApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">#9E9696</item>
-        <item name="colorPrimaryDark">#112530</item>
-        <item name="colorAccent">#354460</item>
+    <style name="Theme.DictionaryApp" parent="Theme.Material3.Dark">
 
-        <item name="materialCardViewStyle">@style/BaseCardViewStale</item>
         <item name="floatingActionButtonStyle">@style/FloatingActionButtonStyle</item>
-        <item name="textInputStyle">@style/BaseTextInputStyle</item>
-    </style>
-
-    <style name="BaseTextStyle" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:textColor">#9E9696</item>
-        <item name="android:textSize">@dimen/text_size_standard</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="HeaderTextStyle" parent="BaseTextStyle">
-        <item name="android:textColor">#888B91</item>
-        <item name="android:textSize">@dimen/text_size_standard_header</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="BaseCardViewStale" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="cardBackgroundColor">#354460</item>
-        <item name="cardCornerRadius">4dp</item>
-        <item name="shapeAppearance">@style/CardShapeAppearance</item>
-    </style>
-
-    <style name="CardShapeAppearance" parent="ShapeAppearance.Material3.MediumComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">8dp</item>
-    </style>
-
-    <style name="FloatingActionButtonStyle" parent="@style/Widget.MaterialComponents.FloatingActionButton">
-        <item name="backgroundTint">@color/my_fab_bg_color_selector</item>
+        <item name="snackbarStyle">@style/MySnackbarStyle</item>
     </style>
 
 </resources>
