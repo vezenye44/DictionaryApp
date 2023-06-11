@@ -1,7 +1,7 @@
 package com.example.repository.repository
 
-import com.example.model.models.Word
 import com.example.datasource.datasource.base.DataSource
+import com.example.model.models.Word
 import com.example.repository.repository.base.Repository
 
 class RepositoryImpl(

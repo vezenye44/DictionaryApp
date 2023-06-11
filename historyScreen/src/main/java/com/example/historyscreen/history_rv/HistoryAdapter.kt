@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.model.models.Word
 
 class HistoryAdapter(
-    private var data: List<Word> = arrayListOf()
+    private var data: List<Word> = arrayListOf(),
 ) : RecyclerView.Adapter<HistoryViewHolder>() {
 
 

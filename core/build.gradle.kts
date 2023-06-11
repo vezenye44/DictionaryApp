@@ -11,8 +11,8 @@ dependencies {
 
     implementation(project(Modules.model))
 
-    implementation (Kotlin.core)
-    implementation (Android.appcompat)
-    implementation (Android.material)
+    implementation(Kotlin.core)
+    implementation(Android.appcompat)
+    implementation(Android.material)
 
 }

@@ -1,7 +1,7 @@
 package com.example.historyscreen
 
-import com.example.model.models.AppState
 import com.example.core.BaseViewModel
+import com.example.model.models.AppState
 import kotlinx.coroutines.launch
 
 class HistoryViewModel(
@@ -23,8 +23,8 @@ class HistoryViewModel(
         )
     }
 
-    override fun handleError(error: Throwable) {
-        liveDataForViewToObserve.postValue(AppState.Error(error))
+    override fun handleError(throwable: Throwable) {
+        liveDataForViewToObserve.postValue(AppState.Error(throwable))
     }
 
     override fun onCleared() {

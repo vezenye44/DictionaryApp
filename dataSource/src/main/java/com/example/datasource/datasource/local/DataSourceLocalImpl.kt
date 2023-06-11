@@ -1,7 +1,7 @@
 package com.example.datasource.datasource.local
 
-import com.example.model.models.Word
 import com.example.datasource.datasource.base.DataSourceLocal
+import com.example.model.models.Word
 
 class DataSourceLocalImpl(
     private val remoteProvider: RoomDataBaseImplementation,

@@ -9,5 +9,5 @@ android {
 
 dependencies {
 
-    implementation (Kotlin.core)
+    implementation(Kotlin.core)
 }

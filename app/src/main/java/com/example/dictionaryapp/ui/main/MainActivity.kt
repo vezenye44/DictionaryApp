@@ -31,9 +31,9 @@ class MainActivity : BaseActivity<AppState>() {
                 startActivity(
                     TranslateDescriptionActivity.getIntent(
                         this@MainActivity,
-                        data.text.orEmpty(),
-                        data.meanings?.first()?.translation?.text.orEmpty(),
-                        data.meanings?.first()?.imageUrl.orEmpty(),
+                        data.text,
+                        data.meanings.first().translation.text,
+                        data.meanings.first().imageUrl,
                     )
                 )
             }
@@ -41,7 +41,7 @@ class MainActivity : BaseActivity<AppState>() {
     }
 
     override val viewModel: TranslateViewModel by createScope().inject()
-    private val networkStatus: INetworkStatus = getKoin().get<INetworkStatus>()
+    private val networkStatus: INetworkStatus = getKoin().get()
 
     private var searchDialogFragment: SearchDialogFragment? = null
     private var snackbar: Snackbar? = null
@@ -129,13 +129,18 @@ class MainActivity : BaseActivity<AppState>() {
         binding.mainActivityRecyclerview.adapter =
             TranslatesAdapter(onListItemClickListener, dataModel)
     }
+
     private fun updateNetworkStatus(isOnline: Boolean) {
         if (isOnline) {
             snackbar?.dismiss()
             showIsOnlineScreen()
         } else {
             showIsOfflineScreen()
-            snackbar = Snackbar.make(binding.root, "Проверьте подключение к сети", Snackbar.LENGTH_INDEFINITE)
+            snackbar = Snackbar.make(
+                binding.root,
+                "Проверьте подключение к сети",
+                Snackbar.LENGTH_INDEFINITE
+            )
             snackbar?.show()
         }
     }

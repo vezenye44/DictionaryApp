@@ -1,8 +1,8 @@
 package com.example.dictionaryapp.ui.main
 
+import com.example.model.interactor.Interactor
 import com.example.model.models.AppState
 import com.example.model.models.Word
-import com.example.model.interactor.Interactor
 import com.example.repository.repository.base.Repository
 import com.example.repository.repository.base.RepositoryLocal
 

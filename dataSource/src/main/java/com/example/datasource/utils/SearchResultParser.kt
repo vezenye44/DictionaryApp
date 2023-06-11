@@ -1,18 +1,18 @@
 package com.example.datasource.utils
 
 import com.example.datasource.retrofit.WordDTO
+import com.example.datasource.room.HistoryEntity
 import com.example.model.models.Meanings
 import com.example.model.models.Translation
 import com.example.model.models.Word
-import com.example.datasource.room.HistoryEntity
 
-fun mapWordDTOToResult(searchResult: List<WordDTO>): List<Word>{
+fun mapWordDTOToResult(searchResult: List<WordDTO>): List<Word> {
     return searchResult.map { result ->
         var meanings: List<Meanings> = listOf()
         result.meanings?.let {
             meanings = it.map { meaningsDto ->
                 Meanings(
-                    Translation(meaningsDto.translation?.text?: ""),
+                    Translation(meaningsDto.translation?.text ?: ""),
                     meaningsDto.imageUrl ?: ""
                 )
             }

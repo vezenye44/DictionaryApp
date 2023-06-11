@@ -1,7 +1,7 @@
 package com.example.dictionaryapp.ui.main
 
-import com.example.model.models.AppState
 import com.example.core.BaseViewModel
+import com.example.model.models.AppState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -10,7 +10,6 @@ class TranslateViewModel(
     private val interactor: TranslateInteractor,
 ) : BaseViewModel<AppState>() {
 
-    private var appState: AppState? = null
     override fun handleError(throwable: Throwable) {
         liveDataForViewToObserve.value = AppState.Error(throwable)
     }
