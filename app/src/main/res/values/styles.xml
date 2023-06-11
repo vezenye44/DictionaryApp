@@ -20,4 +20,9 @@
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:inputType">text</item>
     </style>
+
+    <style name="MySnackbarStyle" parent="@style/Widget.Material3.Snackbar">
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:backgroundTint">@color/color_error</item>
+    </style>
 </resources>

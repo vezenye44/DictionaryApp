@@ -5,17 +5,16 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 
-class AndroidNetworkStatus(context: Context) : INetworkStatus {
-
-    private val networkStatusLiveData = MutableLiveData<Boolean>()
+class OnlineLiveData(context: Context) : LiveData<Boolean>() {
 
     private val availableNetworks = mutableSetOf<Network>()
 
     private val connectivityManager: ConnectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
     private val request = NetworkRequest.Builder().build()
+
     private val callback = object : ConnectivityManager.NetworkCallback() {
 
         override fun onAvailable(network: Network) {
@@ -31,21 +30,17 @@ class AndroidNetworkStatus(context: Context) : INetworkStatus {
         }
     }
 
-    init {
+    override fun onActive() {
         connectivityManager.registerNetworkCallback(request, callback)
     }
 
+    override fun onInactive() {
+        connectivityManager.unregisterNetworkCallback(callback)
+    }
+
     private fun update(isOnline: Boolean) {
-        if (isOnline != networkStatusLiveData.value) {
-            networkStatusLiveData.postValue(isOnline)
+        if (isOnline != value) {
+            postValue(isOnline)
         }
-    }
-
-    override fun getNetworkStatusLiveData(): LiveData<Boolean> {
-        return networkStatusLiveData
-    }
-
-    override fun isOnline(): Boolean {
-        return networkStatusLiveData.value ?: false
     }
 }

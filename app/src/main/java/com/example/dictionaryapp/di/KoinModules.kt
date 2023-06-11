@@ -29,7 +29,7 @@ val application = module {
     single { Room.databaseBuilder(get(), HistoryDatabase::class.java, "HistoryDB").build() }
     single { get<HistoryDatabase>().historyDao() }
 
-    single<INetworkStatus> { AndroidNetworkStatus() }
+    single<INetworkStatus> { AndroidNetworkStatus(get()) }
 
     single<Repository<List<Word>>> { RepositoryImpl(get()) }
     single<RepositoryLocal<List<Word>>> { RepositoryLocalImpl(get()) }

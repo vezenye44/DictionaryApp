@@ -14,6 +14,9 @@ import com.example.dictionaryapp.ui.main.translates_rv.TranslatesAdapter
 import com.example.historyscreen.HistoryActivity
 import com.example.model.models.AppState
 import com.example.model.models.Word
+import com.example.networkstatus.INetworkStatus
+import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.getKoin
 import org.koin.android.scope.createScope
 
 
@@ -38,6 +41,10 @@ class MainActivity : BaseActivity<AppState>() {
     }
 
     override val viewModel: TranslateViewModel by createScope().inject()
+    private val networkStatus: INetworkStatus = getKoin().get<INetworkStatus>()
+
+    private var searchDialogFragment: SearchDialogFragment? = null
+    private var snackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +55,20 @@ class MainActivity : BaseActivity<AppState>() {
     }
 
     private fun initView() {
-        binding.searchFab.setOnClickListener {
-            val searchDialogFragment = SearchDialogFragment.newInstance()
-            searchDialogFragment.setOnSearchClickListener { searchWord ->
-                viewModel.getData(searchWord, true)
+
+        networkStatus.apply {
+            updateNetworkStatus(isOnline())
+            getNetworkStatusLiveData().observe(this@MainActivity) {
+                updateNetworkStatus(it)
             }
-            searchDialogFragment.show(
+        }
+
+        binding.searchFab.setOnClickListener {
+            searchDialogFragment = SearchDialogFragment.newInstance()
+            searchDialogFragment?.setOnSearchClickListener { searchWord ->
+                viewModel.getData(searchWord, networkStatus.isOnline())
+            }
+            searchDialogFragment?.show(
                 supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG
             )
         }
@@ -64,6 +79,7 @@ class MainActivity : BaseActivity<AppState>() {
         return super.onCreateOptionsMenu(menu)
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_history -> {
@@ -73,7 +89,6 @@ class MainActivity : BaseActivity<AppState>() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 
     override fun renderData(appState: AppState) {
         when (appState) {
@@ -113,6 +128,34 @@ class MainActivity : BaseActivity<AppState>() {
             LinearLayoutManager(applicationContext)
         binding.mainActivityRecyclerview.adapter =
             TranslatesAdapter(onListItemClickListener, dataModel)
+    }
+    private fun updateNetworkStatus(isOnline: Boolean) {
+        if (isOnline) {
+            snackbar?.dismiss()
+            showIsOnlineScreen()
+        } else {
+            showIsOfflineScreen()
+            snackbar = Snackbar.make(binding.root, "Проверьте подключение к сети", Snackbar.LENGTH_INDEFINITE)
+            snackbar?.show()
+        }
+    }
+
+    private fun showIsOfflineScreen() {
+        binding.successLinearLayout.visibility = VISIBLE
+        binding.searchFab.visibility = GONE
+
+        searchDialogFragment?.dismiss()
+
+        binding.loadingFrameLayout.visibility = GONE
+        binding.errorLinearLayout.visibility = GONE
+    }
+
+    private fun showIsOnlineScreen() {
+        binding.successLinearLayout.visibility = VISIBLE
+        binding.searchFab.visibility = VISIBLE
+
+        binding.loadingFrameLayout.visibility = GONE
+        binding.errorLinearLayout.visibility = GONE
     }
 
     private fun showErrorScreen(error: String?) {

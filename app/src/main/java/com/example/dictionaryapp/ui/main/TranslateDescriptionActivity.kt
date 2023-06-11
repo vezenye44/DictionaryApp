@@ -65,7 +65,7 @@ class TranslateDescriptionActivity() : AppCompatActivity() {
     }
 
     private fun startLoadingOrShowError() {
-        if (connection.isOnline(applicationContext)) {
+        if (connection.isOnline()) {
             setData()
         } else {
             AlertDialog.Builder(this).setTitle(R.string.dialog_title_device_is_offline)

@@ -1,8 +1,9 @@
 package com.example.networkstatus
 
-import android.content.Context
+import androidx.lifecycle.LiveData
 
 interface INetworkStatus {
 
-    fun isOnline(context: Context): Boolean
+    fun getNetworkStatusLiveData(): LiveData<Boolean>
+    fun isOnline(): Boolean
 }

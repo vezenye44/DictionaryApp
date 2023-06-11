@@ -3,6 +3,7 @@
     <style name="Theme.DictionaryApp" parent="Theme.Material3.Dark">
 
         <item name="floatingActionButtonStyle">@style/FloatingActionButtonStyle</item>
+        <item name="snackbarStyle">@style/MySnackbarStyle</item>
     </style>
 
 </resources>
